@@ -1,0 +1,37 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    width: 150px;
+    height: 150px;
+    font-size: 60px;
+}
+
+.calculator {
+    height: 800px;
+    width: 600px;
+    border-width: 10px;
+    border-style: solid;
+}
+
+.display {
+    width: 600px;
+    height: 200px;
+    font-size: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
