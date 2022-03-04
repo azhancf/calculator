@@ -12,7 +12,6 @@ function divide(a, b) {
     return a / b;   
 }
 
-
 function operate(operator, a, b) {
     switch (operator) {
         case add:
@@ -26,4 +25,10 @@ function operate(operator, a, b) {
     }
 }
 
-console.log(operate(add, 2, 4));
+
+const display = document.querySelector('.display');
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', (e) => {
+    display.textContent += e.target.textContent;
+}));
