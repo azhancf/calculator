@@ -48,25 +48,17 @@ function clearDisplay() {
 // TODO: multiple values
 // TODO: use result of = in next calculation
 
-let num1 = null;
-let operator = null;
-let num2 = null;
-let newCalculation = false;
-let currentNumber = "";
 
-
-const display = document.querySelector('.display');
-const buttons = document.querySelectorAll('button');
-buttons.forEach(button => button.addEventListener('click', (e) => {
-    const buttonType = e.target.textContent;
-    if (buttonType == "=") {
+function recordNumbers(e) {
+    const selectedButton = e.target.textContent;
+    if (selectedButton == "=") {
         num2 = currentNumber;
         clearDisplay();
         displayContent(operate(operator, num1, num2));
         resetValues();
         newCalculation = true;
     }
-    else if (buttonType == "AC") {
+    else if (selectedButton == "AC") {
         resetValues();
         clearDisplay();
     }
@@ -75,14 +67,25 @@ buttons.forEach(button => button.addEventListener('click', (e) => {
             clearDisplay();
             newCalculation = false;
         }
-        if ((buttonType == "+" || buttonType == "-" || buttonType == "×" || buttonType == "÷") && operator == null) {
+        if ((selectedButton == "+" || selectedButton == "-" || selectedButton == "×" || selectedButton == "÷") && operator == null) {
             num1 = currentNumber;
             currentNumber = "";
-            operator = buttonType;
+            operator = selectedButton;
         }
         else {
-            currentNumber += buttonType;
+            currentNumber += selectedButton;
         }
-        displayContent(buttonType);
+        displayContent(selectedButton);
     }
-}));
+}
+
+
+let num1 = null;
+let operator = null;
+let num2 = null;
+let newCalculation = false;
+let currentNumber = "";
+
+const display = document.querySelector('.display');
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', recordNumbers));
