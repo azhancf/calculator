@@ -49,36 +49,43 @@ function clearDisplay() {
 // TODO: errors if two operators in a row, at the beginning, etc.
 
 
-function findEntireNumber(expression, index, direction) {
+function findEntireNumber(expression, index, direction) { // this can definitely be made more simple
     let currentIndex = index;
-    let currentChar = expression[currentIndex];
-    while (currentChar != "+" && currentChar != "+" && currentChar != "+" && currentChar != "+" && currentIndex != 0 && currentIndex != expression.length - 1) { // or beginning/end of expression
+    let currentChar;
+    while (currentChar != "+" && currentChar != "-" && currentChar != "×" && currentChar != "÷") {
+        if (currentIndex == 0 && direction == "left") break;
+        if (currentIndex == expression.length - 1 && direction == "right") break;
         direction == "left" ? currentIndex-- : currentIndex++; // index up if right and down if left
         currentChar = expression[currentIndex];
-    } 
-    // also starts from the operator (doesn't entirely work when past the operator)
+    }
+    if (currentChar == "+" || currentChar == "-" || currentChar == "×" || currentChar == "÷") { // ensures operator isn't in the final string (there's probably a better way to do this)
+        direction == "left" ? currentIndex++ : currentIndex--;
+    }
+    if (direction == "right") { // because of the way .substring works (includes) when going right
+        currentIndex++;
+        index++;
+    }
     return expression.substring(currentIndex, index);
 }
 
 function calculate(expression) {
     for (let i = 0; i < expression.length; i++) {
         let entireLeft = findEntireNumber(expression, i, "left");
-        console.log(i + ": " + entireLeft);
         let entireRight = findEntireNumber(expression, i, "right");
-        // switch (expression[i]) {
-        //     case "+":
-        //         console.log(operate("+", entireLeft, entireRight));
-        //         break;
-        //     case "-":
-        //         console.log(operate("-", entireLeft, entireRight));
-        //         break;
-        //     case "×":
-        //         console.log(operate("×", entireLeft, entireRight));
-        //         break;
-        //     case "÷":
-        //         console.log(operate("÷", entireLeft, entireRight));
-        //         break;
-        // }
+        switch (expression[i]) {
+            case "+":
+                console.log(operate("+", entireLeft, entireRight));
+                break;
+            case "-":
+                console.log(operate("-", entireLeft, entireRight));
+                break;
+            case "×":
+                console.log(operate("×", entireLeft, entireRight));
+                break;
+            case "÷":
+                console.log(operate("÷", entireLeft, entireRight));
+                break;
+        }
     }
 }
 
