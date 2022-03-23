@@ -47,7 +47,7 @@ function isOperator(char) {
     return char == "+" || char == "-" || char == "×" || char == "÷";
 }
 
-// TODO: chain last result with new calculation (look at student example)
+// TODO also delete "misc.js" when done eventually
 function recordNumbers(e) {
     const selectedButtonText = e.target.textContent;
 
@@ -56,14 +56,8 @@ function recordNumbers(e) {
         clearDisplay();
     }
     else {
-        if (newCalculation) {
-            if (isOperator(selectedButtonText)) {
-                num1 = operate(operator, num1, currentNumber);
-                console.log(num1);
-            }
-            else {
-                resetValues();
-            }
+        if (newCalculation && !isOperator(selectedButtonText)) {
+            resetValues();
             newCalculation = false;
         }
         if (selectedButtonText == "=") {
@@ -79,7 +73,6 @@ function recordNumbers(e) {
                 clearDisplayNext = false;
             }
             if (isOperator(selectedButtonText)) {
-                //console.log("~~~!!!!THIS IS AN OPERATOR!!!!");
                 if (num1 != null && currentNumber != "") {
                     num1 = operate(operator, num1, currentNumber); 
                 }
@@ -97,12 +90,6 @@ function recordNumbers(e) {
         }
     
     }
-    
-    
-    // console.log(num1);
-    // console.log(num2);
-    // console.log(operator);
-    // console.log(currentNumber);
 }
 
 
