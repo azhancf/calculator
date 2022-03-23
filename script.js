@@ -1,4 +1,4 @@
-// basic functions
+// Basic Functions:
 function add(a, b) {
     return a + b;
 }
@@ -12,7 +12,9 @@ function divide(a, b) {
     return a / b;   
 }
 
+// Operate:
 function operate(operator, a, b) {
+    // convert a and b to numbers
     a = Number(a);
     b = Number(b);
     switch (operator) {
@@ -27,115 +29,88 @@ function operate(operator, a, b) {
     }
 }
 
-// display and value functions
-function displayContent(value) {
+// Display and Value Functions:
+function addToDisplay(value) {
     display.textContent += value;
 }
-
-function resetValues() {
-    num1 = null;
-    operator = null;
-    num2 = null;
-    currentNumber = "";
-}
-
 function clearDisplay() {
     display.textContent = "";
 }
-
-
-// TODO: make font of numbers smaller if too big to fit on the display
-// TODO: use result of = in next calculation
-// TODO: errors if two operators in a row, at the beginning, etc.
-
-
-function findEntireNumber(expression, index, direction) { // this can definitely be made more simple
-    let currentIndex = index;
-    let currentChar;
-    while (currentChar != "+" && currentChar != "-" && currentChar != "×" && currentChar != "÷") {
-        if (currentIndex == 0 && direction == "left") break;
-        if (currentIndex == expression.length - 1 && direction == "right") break;
-        direction == "left" ? currentIndex-- : currentIndex++; // index up if right and down if left
-        currentChar = expression[currentIndex];
-    }
-    if (currentChar == "+" || currentChar == "-" || currentChar == "×" || currentChar == "÷") { // ensures operator isn't in the final string (there's probably a better way to do this)
-        direction == "left" ? currentIndex++ : currentIndex--;
-    }
-    if (direction == "right") { // because of the way .substring works (includes) when going right
-        currentIndex++;
-        index++;
-    }
-    return expression.substring(currentIndex, index);
+function resetValues() {
+    num1 = null;
+    num2 = null;
+    operator = null;
+    currentNumber = "";
 }
 
-function calculate(expression) {
-    for (let i = 0; i < expression.length; i++) {
-        let entireLeft = findEntireNumber(expression, i, "left");
-        let entireRight = findEntireNumber(expression, i, "right");
-        switch (expression[i]) {
-            case "+":
-                console.log(operate("+", entireLeft, entireRight));
-                break;
-            case "-":
-                console.log(operate("-", entireLeft, entireRight));
-                break;
-            case "×":
-                console.log(operate("×", entireLeft, entireRight));
-                break;
-            case "÷":
-                console.log(operate("÷", entireLeft, entireRight));
-                break;
-        }
-    }
+function isOperator(char) {
+    return char == "+" || char == "-" || char == "×" || char == "÷";
 }
 
-
+// TODO: chain last result with new calculation (look at student example)
 function recordNumbers(e) {
-    const selectedButton = e.target.textContent;
-    if (selectedButton == "=") {
-        calculate(display.textContent);
-    }
-    else if (selectedButton == "AC") {
+    const selectedButtonText = e.target.textContent;
+
+    if (selectedButtonText == "AC") {
+        resetValues();
         clearDisplay();
     }
     else {
-        displayContent(selectedButton);
+        if (newCalculation) {
+            if (isOperator(selectedButtonText)) {
+                num1 = operate(operator, num1, currentNumber);
+                console.log(num1);
+            }
+            else {
+                resetValues();
+            }
+            newCalculation = false;
+        }
+        if (selectedButtonText == "=") {
+            num2 = currentNumber;
+            clearDisplay();
+            addToDisplay(operate(operator, num1, num2));
+            newCalculation = true;
+            clearDisplayNext = true;
+        }
+        else {
+            if (clearDisplayNext) {
+                clearDisplay();
+                clearDisplayNext = false;
+            }
+            if (isOperator(selectedButtonText)) {
+                //console.log("~~~!!!!THIS IS AN OPERATOR!!!!");
+                if (num1 != null && currentNumber != "") {
+                    num1 = operate(operator, num1, currentNumber); 
+                }
+                else {
+                    num1 = currentNumber;
+                }
+                currentNumber = "";
+                operator = selectedButtonText;
+                clearDisplayNext = true;
+            }
+            else {
+                currentNumber += selectedButtonText;
+                addToDisplay(selectedButtonText);
+            }
+        }
+    
     }
-    // redo RESETVALUES function
-
-    // if (selectedButton == "=") {
-    //     num2 = currentNumber;
-    //     clearDisplay();
-    //     displayContent(operate(operator, num1, num2));
-    //     resetValues();
-    //     newCalculation = true;
-    // }
-    // else if (selectedButton == "AC") {
-    //     resetValues();
-    //     clearDisplay();
-    // }
-    // else {
-    //     if (newCalculation) {
-    //         clearDisplay();
-    //         newCalculation = false;
-    //     }
-    //     if ((selectedButton == "+" || selectedButton == "-" || selectedButton == "×" || selectedButton == "÷") && operator == null) {
-    //         num1 = currentNumber;
-    //         currentNumber = "";
-    //         operator = selectedButton;
-    //     }
-    //     else {
-    //         currentNumber += selectedButton;
-    //     }
-    //     displayContent(selectedButton);
-    // }
+    
+    
+    // console.log(num1);
+    // console.log(num2);
+    // console.log(operator);
+    // console.log(currentNumber);
 }
 
 
 let num1 = null;
-let operator = null;
 let num2 = null;
-let newCalculation = false;
+let operator = null;
+let clearDisplayNext = false;
+let newCalculation = false; // because doesn't start with result
 let currentNumber = "";
 
 const display = document.querySelector('.display');
