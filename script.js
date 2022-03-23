@@ -9,7 +9,7 @@ function multiply(a, b) {
     return a * b;
 }
 function divide(a, b) {
-    return a / b;   
+    return (b != 0 ? (a / b).toFixed(4) : "You can't divide by 0!");   
 }
 
 // Operate:
@@ -47,7 +47,9 @@ function isOperator(char) {
     return char == "+" || char == "-" || char == "×" || char == "÷";
 }
 
-// TODO also delete "misc.js" when done eventually
+// todo make decimal points/expression smaller or remove digits to fit on display
+// todo numbers get cleared on second expression after operator
+// todo text is kind of large such as when dividing by 0
 function recordNumbers(e) {
     const selectedButtonText = e.target.textContent;
 
@@ -56,16 +58,18 @@ function recordNumbers(e) {
         clearDisplay();
     }
     else {
-        if (newCalculation && !isOperator(selectedButtonText)) {
-            resetValues();
+        if (newCalculation) {
+            if (!isOperator(selectedButtonText)) resetValues();
             newCalculation = false;
         }
         if (selectedButtonText == "=") {
-            num2 = currentNumber;
-            clearDisplay();
-            addToDisplay(operate(operator, num1, num2));
-            newCalculation = true;
-            clearDisplayNext = true;
+            if (currentNumber != "" && operator != null) {
+                num2 = currentNumber;
+                clearDisplay();
+                addToDisplay(operate(operator, num1, num2));
+                newCalculation = true;
+                clearDisplayNext = true;
+            }
         }
         else {
             if (clearDisplayNext) {
@@ -73,7 +77,7 @@ function recordNumbers(e) {
                 clearDisplayNext = false;
             }
             if (isOperator(selectedButtonText)) {
-                if (num1 != null && currentNumber != "") {
+                if (num1 && currentNumber != "") {
                     num1 = operate(operator, num1, currentNumber); 
                 }
                 else {
