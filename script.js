@@ -9,7 +9,7 @@ function multiply(a, b) {
     return a * b;
 }
 function divide(a, b) {
-    return (b != 0 ? (a / b).toFixed(4) : "You can't divide by 0!");   
+    return (b != 0 ? (a / b).toFixed(4) : "lmao");   
 }
 
 // Operate:
@@ -50,6 +50,15 @@ function isOperator(char) {
 // todo make decimal points/expression smaller or remove digits to fit on display
 // todo numbers get cleared on second expression after operator
 // todo text is kind of large such as when dividing by 0
+// todo disable having two operators in a row
+
+// todo EXTRA CREDIT: Users can get floating point numbers if they do the math required to get one, but they can’t type them in yet. 
+    // todo Add a . button and let users input decimals! Make sure you don’t let them type more than one though: 12.3.56.5. It is hard to do math on these numbers. 
+    // todo (disable the decimal button if there’s already one in the display)
+// todo EXTRA CREDIT: Make it look nice! This is a great project to practice your CSS skills. At least make the operations a different color from the keypad buttons.
+// todo EXTRA CREDIT: Add a “backspace” button, so the user can undo if they click the wrong number.
+// todo EXTRA CREDIT: Add keyboard support!
+
 function recordNumbers(e) {
     const selectedButtonText = e.target.textContent;
 
