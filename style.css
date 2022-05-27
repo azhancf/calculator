@@ -5,53 +5,94 @@ html, body {
 
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     background-color: #dcf7fc;
+    font-family: 'Roboto', sans-serif;
 }
 
 button {
-    width: 150px;
-    height: 150px;
-    font-size: 60px;
+    width: 125px;
+    height: 100px;
+    font-size: 40px;
     background-color: #b2bbd4;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 80px;
+    color: #373a40;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+footer {
+    display: flex;
+    justify-content: left;
+    flex-shrink: 0;
+    align-items: center;
+
+    padding: 30px 0px;
+    bottom: 0;
+    width: 100%;
+    height: 15px;
+
+    background-color: #1F2937;
+    color:rgb(255, 255, 255);
+    font-size: 20px;
+    padding-left: 50px;
+    width: 98.06%; /* i don't think this is the right way to do this lmao */
+}
+
+.content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .calculator {
-    height: 800px;
-    width: 600px;
-    border-width: 20px;
+    height: 655px;
+    width: 500px;
+    border-width: 15px;
     border-style: solid;
-    border-radius: 20px;
+    border-radius: 8px;
 }
 
 .display {
-    width: 600px;
-    height: 200px;
+    width: 500px;
+    height: 150px;
     font-size: 100px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     background-color: rgb(255, 255, 255);
+    border-bottom: 5px solid black;
 }
 
 .buttons {
     display: flex;
     flex-wrap: wrap;
+    background-color: #000000;
 }
 
-.operation {
+.yellow {
     background-color:#fcba03;
 }
-.clear {
+.gray {
     background-color: #8b8b8b;
 }
-.equals {
+.blue {
     background-color: #1290ff;
+}
+.backspace {
+    width: 375px;
 }
 
 .hovered {
     transform: scale(1.05);
-    border-color: #838383;
-    box-shadow: 0 0 0.5rem #5f5f5f;
+    border-color: #000000;
+    box-shadow: 0 0 0.3rem #000000;
 }
+

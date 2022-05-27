@@ -49,13 +49,12 @@ function isOperator(char) {
 
 // todo make decimal points/expression smaller or remove digits to fit on display
 // todo numbers get cleared on second expression after operator
-// todo text is kind of large such as when dividing by 0
+// todo text is kind of large such as when dividing by 0 or working with large numbers
 // todo disable having two operators in a row
 
 // todo EXTRA CREDIT: Users can get floating point numbers if they do the math required to get one, but they can’t type them in yet. 
     // todo Add a . button and let users input decimals! Make sure you don’t let them type more than one though: 12.3.56.5. It is hard to do math on these numbers. 
     // todo (disable the decimal button if there’s already one in the display)
-// todo EXTRA CREDIT: Make it look nice! This is a great project to practice your CSS skills. At least make the operations a different color from the keypad buttons.
 // todo EXTRA CREDIT: Add keyboard support!
 
 function recordNumbers(e) {
@@ -108,7 +107,6 @@ function recordNumbers(e) {
 
 function removeTransition(e) {
     this.classList.remove('hovered');
-    console.log("mouse just left");
 }
 
 
