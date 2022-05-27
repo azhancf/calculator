@@ -56,7 +56,6 @@ function isOperator(char) {
     // todo Add a . button and let users input decimals! Make sure you don’t let them type more than one though: 12.3.56.5. It is hard to do math on these numbers. 
     // todo (disable the decimal button if there’s already one in the display)
 // todo EXTRA CREDIT: Make it look nice! This is a great project to practice your CSS skills. At least make the operations a different color from the keypad buttons.
-// todo EXTRA CREDIT: Add a “backspace” button, so the user can undo if they click the wrong number.
 // todo EXTRA CREDIT: Add keyboard support!
 
 function recordNumbers(e) {
@@ -79,6 +78,9 @@ function recordNumbers(e) {
                 newCalculation = true;
                 clearDisplayNext = true;
             }
+        }
+        else if (selectedButtonText == "⌫") {
+            display.textContent = display.textContent.slice(0, -1);
         }
         else {
             if (clearDisplayNext) {
