@@ -101,8 +101,12 @@ function recordNumbers(e) {
                 addToDisplay(selectedButtonText);
             }
         }
-    
     }
+}
+
+function removeTransition(e) {
+    this.classList.remove('hovered');
+    console.log("mouse just left");
 }
 
 
@@ -116,3 +120,7 @@ let currentNumber = "";
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', recordNumbers));
+
+// when hovered over, key becomes emphasized
+buttons.forEach(button => button.addEventListener('mouseleave', removeTransition));
+buttons.forEach(button => button.addEventListener('mouseenter', () => button.classList.add('hovered')));
