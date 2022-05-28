@@ -53,12 +53,18 @@ function isOperator(char) {
 // todo text is kind of large such as when dividing by 0 or working with large numbers
 // todo disable having two operators in a row
 // todo round even when adding/subtracting
+// todo if there are extra zeroes, get rid of them
 
 
-// todo EXTRA CREDIT: Add keyboard support!
+// todo EXTRA CREDIT: Add keyboard support! (for enter, AC, backspace) [only when certain button]
 
-function recordNumbers(e) {
+function clickInput(e) {
     const selectedButtonText = e.target.textContent;
+    recordNumbers(selectedButtonText);
+}
+
+function recordNumbers(text) {
+    const selectedButtonText = text;
 
     if (selectedButtonText == "AC") {
         resetValues();
@@ -115,7 +121,12 @@ function recordNumbers(e) {
     }
 }
 
-function removeTransition(e) {
+function keyboardInput(e) {
+    const key = document.querySelector(`[data-key="${e.key}"]`);
+    recordNumbers(key.textContent);
+}
+
+function removeTransition() {
     this.classList.remove('hovered');
 }
 
@@ -130,7 +141,8 @@ let usingDecimal = false;
 
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
-buttons.forEach(button => button.addEventListener('click', recordNumbers));
+buttons.forEach(button => button.addEventListener('click', clickInput));
+window.addEventListener('keydown', keyboardInput);
 
 // when hovered over, key becomes emphasized
 buttons.forEach(button => button.addEventListener('mouseleave', removeTransition));
