@@ -41,6 +41,7 @@ function resetValues() {
     num2 = null;
     operator = null;
     currentNumber = "";
+    usingDecimal = false;
 }
 
 function isOperator(char) {
@@ -51,10 +52,9 @@ function isOperator(char) {
 // todo numbers get cleared on second expression after operator
 // todo text is kind of large such as when dividing by 0 or working with large numbers
 // todo disable having two operators in a row
+// todo round even when adding/subtracting
 
-// todo EXTRA CREDIT: Users can get floating point numbers if they do the math required to get one, but they can’t type them in yet. 
-    // todo Add a . button and let users input decimals! Make sure you don’t let them type more than one though: 12.3.56.5. It is hard to do math on these numbers. 
-    // todo (disable the decimal button if there’s already one in the display)
+
 // todo EXTRA CREDIT: Add keyboard support!
 
 function recordNumbers(e) {
@@ -87,6 +87,7 @@ function recordNumbers(e) {
                 clearDisplayNext = false;
             }
             if (isOperator(selectedButtonText)) {
+                usingDecimal = false;
                 if (num1 && currentNumber != "") {
                     num1 = operate(operator, num1, currentNumber); 
                 }
@@ -98,8 +99,17 @@ function recordNumbers(e) {
                 clearDisplayNext = true;
             }
             else {
-                currentNumber += selectedButtonText;
-                addToDisplay(selectedButtonText);
+                if (selectedButtonText == "." && !usingDecimal) {
+                    usingDecimal = true;
+                    currentNumber += selectedButtonText;
+                    addToDisplay(selectedButtonText);
+                }
+                else {
+                    if (selectedButtonText != ".") {
+                        currentNumber += selectedButtonText;
+                        addToDisplay(selectedButtonText);
+                    }
+                }
             }
         }
     }
@@ -116,6 +126,7 @@ let operator = null;
 let clearDisplayNext = false;
 let newCalculation = false; // because doesn't start with result
 let currentNumber = "";
+let usingDecimal = false;
 
 const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('button');
